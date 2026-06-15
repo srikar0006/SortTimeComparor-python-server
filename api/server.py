@@ -57,11 +57,16 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
 
         self.wfile.write(body)
+
+    def do_GET(self):
+        self._send_json(200, {
+            "message": "API is working. Send POST request with numbers."
+        })
 
     def do_OPTIONS(self):
         self._send_json(200, {"ok": True})
